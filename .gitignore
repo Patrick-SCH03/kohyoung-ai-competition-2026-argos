@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.venv/
+# contest files are not part of this repository
+simulation_data/
+evaluation_data/
+utils/
