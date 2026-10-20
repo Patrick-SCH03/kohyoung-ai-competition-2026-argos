@@ -90,7 +90,7 @@ From the official contest evaluation (96 evaluation boards, hidden during the co
 
 | Metric | Value |
 |---|---|
-| **Official ranking** | **3rd** of 13 (reference solver included) · Total 13,351.1 |
+| **Evaluation ranking** | **3rd** of 13 (reference solver included) · Total 13,351.1 (final awards are decided after the ICCAS presentations) |
 | **Validity** | 96/96 boards pass coverage and order, 0 rule violations |
 | **vs reference solver** | **−4.7%** on CT + 10k, better on 94 of 96 boards · mean FOVs 61.1 → **49.9** |
 | **vs lower bound** | on average **2.16%** above a bound that no valid plan can beat |

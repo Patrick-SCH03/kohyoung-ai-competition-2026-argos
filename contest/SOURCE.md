@@ -9,7 +9,7 @@
 | `evaluation_data/<보드>/ARGOS/output_fov.csv` | 주최 측이 ARGOS 팀 제출 저장소에 돌려준 공식 평가 출력 (커밋 `ce3e4d64`, 2026-10-12) |
 | `evaluation_results/EVALUATION_INFO.txt`, `evaluation_results/summary_ARGOS.csv` | 위와 같은 커밋의 평가 요약 |
 | `SOURCE.md` | 팀 ARGOS가 쓴 이 문서 |
-| 그 밖의 모든 파일 (`2_run.py`, `utils/`, `simulation_data/`, `evaluation_data/`의 입력과 참조 솔버 출력, `ky_solver/`, 문서 등) | 대회 공식 저장소 [iccas2026-kohyoung/contest](https://github.com/iccas2026-kohyoung/contest) 커밋 `943c885f` (2026-10-20) |
+| 그 밖의 모든 파일 (`2_run.py`, `utils/`, `simulation_data/`, `evaluation_data/`의 입력과 참조 솔버 출력, `ky_solver/`, 문서 등) | 대회 공식 저장소 [iccas2026-kohyoung/contest](https://github.com/iccas2026-kohyoung/contest) 커밋 `f08ed80a` (2026-10-20) |
 
 - 공식 저장소의 `.gitignore`는 이 저장소 규칙과 겹쳐서 옮기지 않았습니다.
 - 팀 제출 저장소로 함께 온 `evaluation_data/<보드>/solver.json`은 넣지 않았습니다. 우리 솔버가 만든 파일이 아니며, 다른 참가 팀의 실행 기록으로 보입니다.
@@ -29,7 +29,7 @@ This folder holds the material of the 4th Koh Young AI Competition (ICCAS 2026),
 | `evaluation_data/<board>/ARGOS/output_fov.csv` | official evaluation outputs the organizers returned to Team ARGOS's submission repository (commit `ce3e4d64`, 2026-10-12) |
 | `evaluation_results/EVALUATION_INFO.txt`, `evaluation_results/summary_ARGOS.csv` | evaluation summary from the same commit |
 | `SOURCE.md` | this document, written by Team ARGOS |
-| Every other file (`2_run.py`, `utils/`, `simulation_data/`, the inputs and reference outputs in `evaluation_data/`, `ky_solver/`, documents, …) | official contest repository [iccas2026-kohyoung/contest](https://github.com/iccas2026-kohyoung/contest), commit `943c885f` (2026-10-20) |
+| Every other file (`2_run.py`, `utils/`, `simulation_data/`, the inputs and reference outputs in `evaluation_data/`, `ky_solver/`, documents, …) | official contest repository [iccas2026-kohyoung/contest](https://github.com/iccas2026-kohyoung/contest), commit `f08ed80a` (2026-10-20) |
 
 - The official `.gitignore` is not copied because it overlaps the rules of this repository.
 - `evaluation_data/<board>/solver.json`, which also arrived in the submission repository, is not included. Our solver did not write it; it appears to be another team's run record.
