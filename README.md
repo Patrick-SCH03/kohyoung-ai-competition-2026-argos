@@ -4,7 +4,7 @@
 
 **PCB 검사 장비가 사진을 덜 찍고 덜 움직이도록 촬영 계획을 짜서, 보드당 검사 시간을 줄입니다**
 
-제4회 고영 AI 경진대회(ICCAS 2026) 팀 ARGOS가 제출한 솔버입니다(R8.19, 2026-10-04 제출).
+제4회 고영 AI 경진대회(ICCAS 2026) 팀 ARGOS
 
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC_BY--NC--SA_4.0-lightgrey.svg)](LICENSE)
 
@@ -69,7 +69,7 @@ flowchart LR
 
 ## 실제 예시
 
-> **입력:** 공식 평가 보드 `S00_sparse_fast_001` — PCB 312×246 mm, FOV 96×77 mm, 부품 618개, 최대 코어 9
+> **입력:** 공식 평가 보드 [`S00_sparse_fast_001`](contest/evaluation_data/S00_sparse_fast_001) — PCB 312×246 mm, FOV 96×77 mm, 부품 618개, 최대 코어 9
 >
 > **출력 (`output_fov.csv` 앞부분):**
 > ```
@@ -86,14 +86,45 @@ flowchart LR
 
 ## 측정된 결과
 
-대회 공식 평가(비공개 평가셋 96보드) 기준입니다.
+대회 공식 평가(평가 데이터 96보드, 대회 중에는 비공개) 기준입니다.
 
 | 지⁠표 | 값 |
 |---|---|
+| **공⁠식 순⁠위** | 13팀(참조 솔버 포함) 중 **3위** · Total 13,351.1 |
 | **유⁠효성** | 96/96 보드 커버·순서 통과, 규칙 위반 0 |
 | **참⁠조 솔⁠버 대⁠비** | CT + 10k 기준 **−4.7%**, 96보드 중 94보드에서 더 좋음 · 평균 FOV 61.1 → **49.9장** |
 | **이⁠론 하⁠한 대⁠비** | 어떤 유효한 계획도 넘을 수 없는 하한보다 평균 **2.16%** 높음 |
 | **계⁠산 시⁠간** | 보드당 평균 0.44초 |
+
+평가 보드 원본과 공식 채점 출력은 [`contest/evaluation_data/`](contest/evaluation_data), 요약은 [`contest/evaluation_results/`](contest/evaluation_results)에 있어 그대로 다시 채점할 수 있습니다([시작하기](#시작하기)).
+
+---
+
+## 실험 방법
+
+- **채점기 먼저:** 공개된 채점기([`contest/utils/checker.py`](contest/utils/checker.py))의 CT 계산을 같은 연산 순서로 다시 구현하고, 채점기와 값이 같음을 확인한 뒤에 솔버를 만들었습니다. 이후 모든 판정은 이 시뮬레이터로 했습니다.
+- **새 보드로 판정:** 공개 96보드는 개발에만 쓰고, 채택 여부는 공식 생성기(`1_generate_data.py`)로 새로 만든 보드 수백 장에서 판정했습니다. 비공개 평가셋에 맞춘 튜닝을 피하기 위해서입니다.
+- **짝 비교와 사전 관문:** 후보와 기준선을 같은 보드·같은 환경에서 번갈아 돌려 보드별 차이를 봤습니다. 채택 기준(개선 폭, 최악 보드, 유효성, 결정성, 계산 시간)은 실험 전에 문서로 먼저 정했습니다.
+- **상한부터 재기:** 구현하기 전에 그 방향으로 얻을 수 있는 최대 이득을 오라클 실험으로 먼저 쟀습니다. 정확한 최소 커버(정수계획)를 넣지 않은 것도 이 측정 결과입니다([docs/ALGORITHM.md §10](docs/ALGORITHM.md)).
+- **채점 환경과 장애 점검:** 채점 서버와 같은 조건(Windows 11, Python 3.12)과 Linux 컨테이너에서 결과를 대조하고, 강제 종료·저장 실패·numba 없음에서도 유효한 출력이 남는지 확인했습니다.
+- **반박 검토와 기록:** 결론마다 독립 리뷰어의 반박을 받아 재현되는 지적만 반영했습니다. 실패한 시도를 포함해 300건이 넘는 실험을 원장에 남겼습니다.
+
+---
+
+## 현장 활용과 발전 방향
+
+**활용**
+- **검사 프로그램 자동 작성:** 새 PCB 모델의 부품 좌표만으로 FOV 배치, 방문 순서, 코어 수를 보드당 평균 0.44초에 만듭니다. 사람이 짜던 촬영 계획을 대신하고, 보드당 검사 시간이 줄어든 만큼 라인 처리량이 늘어납니다.
+- **장비 사양 비교:** 시뮬레이터에 속도, 가속도, 코어 수, 복원 시간을 바꿔 넣으면 같은 보드의 검사 시간을 바로 계산합니다. 코어 추가나 장비 구성 변경의 효과를 투입 전에 비교할 수 있습니다.
+- **잦은 모델 전환:** 계산이 짧고 같은 입력에 같은 계획이 나와서, 다품종 라인에서 모델이 바뀔 때마다 다시 계획해도 부담이 없습니다.
+- **안전한 탑재:** 언제 끊겨도 유효한 계획이 남고, 규칙 검사를 통과한 계획만 내보냅니다.
+
+**발전 방향**
+- **실측 보정:** 실제 장비의 이동·촬영·복원 시간 기록으로 시뮬레이터 상수를 보정해 대회 모델과 실제 장비의 차이를 줄입니다.
+- **커버 품질:** 남은 여지는 대부분 FOV 수에 있습니다(이론 하한 대비 +2.16%). 시간 여유가 있는 오프라인 티칭에서는 정확한 최소 커버를 켜는 모드를 둘 수 있습니다.
+- **현장 조건 확장:** 듀얼 레인·다중 헤드, 부품별 검사 우선순위, 재촬영 같은 조건을 시뮬레이터와 목적 함수에 더합니다.
+- **학습과 결합:** 학습된 순서 모델로 첫 계획을 빠르게 만들고, 정확한 시뮬레이터 채점으로 다듬어 큰 보드의 계산 시간을 줄입니다.
+- **다른 공정:** "영역을 점으로 찌르기 + 파이프라인 일정"이라는 같은 구조를 SPI(솔더 페이스트 검사), 3D 측정, 레이저 마킹 경로 계획에도 쓸 수 있습니다.
 
 ---
 
@@ -136,6 +167,14 @@ flowchart LR
 │   ├── verify.py           #   자체 규칙 검사 · 수리
 │   ├── parallel.py         #   병렬 포트폴리오 작업자
 │   └── atomic_io.py        #   원자적 저장
+├── contest/                # 대회 자료 (주최 측 공식 저장소 파일 그대로)
+│   ├── 2_run.py            #   실행기 · 채점 (--eval: 저장된 출력만 다시 채점)
+│   ├── utils/              #   공식 채점기 checker.py · 데이터 생성기
+│   ├── simulation_data/    #   공개 연습 데이터 96보드
+│   ├── evaluation_data/    #   공식 평가 데이터 96보드 + 보드별 ARGOS·참조 솔버 출력
+│   ├── evaluation_results/ #   공식 평가 요약 · 보드별 결과
+│   ├── ky_solver/          #   참조 솔버 (컴파일본, Python 3.12 Windows)
+│   └── *.html              #   대회 규칙 · 데이터 설명 · 가이드 · Q&A
 ├── docs/ALGORITHM.md       # 알고리즘 설계 문서 (영문: ALGORITHM.en.md)
 ├── requirements.txt        # 시험한 패키지 판 (버전 고정)
 ├── LICENSE                 # CC BY-NC-SA 4.0
@@ -148,15 +187,23 @@ flowchart LR
 
 ### 실행
 
-대회 공식 저장소(실행기 `2_run.py`, 채점기 `utils/`, 공개 데이터 `simulation_data/`) 위에 `ARGOS/` 폴더를 넣고 실행합니다.
+대회 자료가 `contest/`에 들어 있어 이 저장소만으로 실행됩니다. 실행기는 같은 폴더의 솔버를 불러오므로 `ARGOS/`를 `contest/` 안에 복사해서 씁니다.
 
 ```bash
-git clone https://github.com/iccas2026-kohyoung/contest
 git clone https://github.com/Patrick-SCH03/kohyoung-ai-competition-2026-argos
-cp -r kohyoung-ai-competition-2026-argos/ARGOS contest/
+cd kohyoung-ai-competition-2026-argos
+pip install -r requirements.txt
+cp -r ARGOS contest/
 cd contest
-pip install -r ../kohyoung-ai-competition-2026-argos/requirements.txt
-python 2_run.py --solver ARGOS
+python 2_run.py --solver ARGOS                          # 공개 연습 데이터 96보드
+python 2_run.py --solver ARGOS --data evaluation_data   # 공식 평가 데이터 96보드
+```
+
+공식 평가 때 나온 출력을 그대로 다시 채점하려면 `--eval`을 씁니다. 솔버를 다시 돌리면 `evaluation_data/<보드>/ARGOS/`의 공식 출력을 덮어쓰니, 다시 채점을 먼저 하세요(되돌리기: `git checkout -- contest/evaluation_data`).
+
+```bash
+python 2_run.py --solver ARGOS --data evaluation_data --eval   # ARGOS 공식 출력
+python 2_run.py --solver ky --data evaluation_data --eval      # 참조 솔버 출력
 ```
 
 | 값 | 어디에 | 비고 |
@@ -199,6 +246,6 @@ python 2_run.py --solver ARGOS
 ## 주의
 
 - **라이선스:** CC BY-NC-SA 4.0입니다. 시뮬레이터·규칙 검사(`ct_sim.py`, `acceleration.py`, `release_tools.py`, `geometry.py`, `verify.py`)는 대회가 같은 라이선스로 제공한 채점기의 계산을 옮긴 부분이 있어 저장소 전체를 같은 조건으로 공개합니다. 상업적으로 쓸 수 없습니다. 자세한 출처는 [NOTICE.md](NOTICE.md)에 있습니다.
-- **대회 자료 미포함:** 데이터, 채점기, 실행기, 참조 솔버는 넣지 않았습니다. 공식 저장소에서 받습니다.
+- **대회 자료:** `contest/`의 데이터·채점기·실행기·참조 솔버·문서는 고영테크놀러지가 CC BY-NC-SA 4.0으로 제공한 자료를 바꾸지 않고 실었습니다. 출처와 범위는 [contest/SOURCE.md](contest/SOURCE.md)에 있습니다.
 - **비공식:** 고영테크놀러지·ICROS의 공식 코드가 아닙니다.
 - **한계:** 전역 최적을 보장하지 않습니다. 계산 시간은 실행 환경(코어 수, 부하)에 따라 달라지고, 병렬 작업자 타이밍 때문에 큰 보드에서는 실행마다 계획이 조금 다를 수 있습니다.
