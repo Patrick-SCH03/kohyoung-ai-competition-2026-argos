@@ -8,3 +8,6 @@ contest/ARGOS/
 contest/summary_*.csv
 contest/simulation_data/**/output_fov.csv
 contest/simulation_data/*/*/
+contest/**/output_fov.csv.tmp
+contest/evaluation_data/*/output_fov.csv
+contest/evaluation_data/*/*/result.html

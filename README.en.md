@@ -103,20 +103,20 @@ The evaluation boards and the official outputs are in [`contest/evaluation_data/
 ## How we experimented
 
 - **Checker first:** we re-implemented the CT computation of the published checker ([`contest/utils/checker.py`](contest/utils/checker.py)) with the same order of operations and confirmed identical values before writing the solver. Every later decision was judged by this simulator.
-- **Judged on new boards:** the 96 public boards were for development only. Adoption was decided on hundreds of fresh boards from the official generator (`1_generate_data.py`), to avoid tuning to the hidden set.
+- **Judged on new boards:** the 96 public boards were for development only. Adoption was decided on hundreds of fresh boards from the official generator (`contest/1_generate_data.py`), to avoid tuning to the hidden set.
 - **Paired runs and pre-set gates:** candidate and baseline ran alternately on the same boards and machine, compared board by board. The adoption criteria (gain, worst board, validity, determinism, computation time) were written down before each experiment.
 - **Measure the ceiling first:** before building an idea, an oracle experiment measured the most it could gain. This is why exact minimum cover (integer programming) was left out ([docs/ALGORITHM.en.md §10](docs/ALGORITHM.en.md)).
 - **Grading environment and failures:** results were cross-checked under the grading server's conditions (Windows 11, Python 3.12) and in a Linux container, and we confirmed a valid output survives a forced kill, a failed write and a missing numba.
-- **Rebuttal and records:** every conclusion went through an independent reviewer's rebuttal, and only reproducible points were adopted. More than 300 experiments, failures included, are kept in a ledger.
+- **Rebuttal and records:** every conclusion went through an independent reviewer's rebuttal, and only reproducible points were adopted. More than 300 experiments, failures included, are kept in a ledger (the ledger and review records are not published).
 
 ---
 
 ## Use in the field and next steps
 
 **Use**
-- **Automatic inspection programs:** from the part coordinates of a new PCB model it builds the FOV layout, visit order and core count in 0.44 s per board on average. It replaces hand-made shot plans, and a shorter cycle time per board raises line throughput.
+- **Automatic inspection programs:** from the part coordinates of a new PCB model it builds the FOV layout, visit order and core count in 0.44 s per board on average. It can replace hand-made shot plans, and under the contest model the shorter cycle time per board can raise line throughput.
 - **Comparing machine specs:** change speed, acceleration, core count or reconstruction time in the simulator and the cycle time of the same board is computed at once, so the effect of extra cores or a new configuration can be compared before deployment.
-- **Frequent model changes:** planning is fast and the same input gives the same plan, so high-mix lines can re-plan at every model change.
+- **Frequent model changes:** planning is fast, and the same input gives the same plan unless the time limit or parallel worker timing steps in, so high-mix lines can re-plan at every model change at little cost.
 - **Safe to embed:** a valid plan exists at every moment, and only plans that pass the rule check are written.
 
 **Next steps**
@@ -167,7 +167,8 @@ The evaluation boards and the official outputs are in [`contest/evaluation_data/
 │   ├── verify.py           #   rule check · repair
 │   ├── parallel.py         #   parallel portfolio workers
 │   └── atomic_io.py        #   atomic writes
-├── contest/                # contest material (files of the official repository, unchanged)
+├── contest/                # contest material (official repository files + official ARGOS evaluation outputs, sources in SOURCE.md)
+│   ├── 1_generate_data.py  #   official data generator (running it rebuilds simulation_data/)
 │   ├── 2_run.py            #   runner · scoring (--eval re-scores saved outputs)
 │   ├── utils/              #   official checker checker.py · data generator
 │   ├── simulation_data/    #   public practice data, 96 boards
@@ -199,7 +200,7 @@ python 2_run.py --solver ARGOS                          # public practice data, 
 python 2_run.py --solver ARGOS --data evaluation_data   # official evaluation data, 96 boards
 ```
 
-To re-score the outputs from the official evaluation as they are, use `--eval`. Running the solver again overwrites the official outputs in `evaluation_data/<board>/ARGOS/`, so re-score first (restore with `git checkout -- contest/evaluation_data`).
+To re-score the outputs from the official evaluation as they are, use `--eval`. Running the solver again overwrites the official outputs in `evaluation_data/<board>/ARGOS/`, so re-score first (restore with `git checkout -- evaluation_data` inside `contest/`).
 
 ```bash
 python 2_run.py --solver ARGOS --data evaluation_data --eval   # official ARGOS outputs
