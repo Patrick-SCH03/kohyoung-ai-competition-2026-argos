@@ -7,7 +7,7 @@ Copyright (c) 2026 Team ARGOS. 라이선스: CC BY-NC-SA 4.0 (전문은 [LICENSE
 본 연구는 ICCAS 2026과 연계하여(in conjunction with) 개최된 AI Contest를 위해 고영테크놀러지(Koh Young Technology)가 제공한 AOI 검사 최적화 데이터셋 및 평가 도구를 사용하였으며, 해당 자료는 CC BY-NC-SA 4.0 라이선스로 제공됩니다.
 
 - 대회 공식 저장소: https://github.com/iccas2026-kohyoung/contest
-- 이 저장소에는 대회 데이터, 채점기, 실행기, 참조 솔버를 넣지 않았습니다.
+- `contest/` 폴더에 대회 공식 저장소의 파일(데이터, 채점기, 실행기, 참조 솔버, 문서)과 공식 평가 데이터를 바꾸지 않고 실었습니다. 출처 커밋과 범위는 [contest/SOURCE.md](contest/SOURCE.md)에 있습니다. 이 자료의 저작권은 고영테크놀러지에 있습니다.
 
 ## 채점기를 옮긴 부분
 
@@ -34,7 +34,7 @@ Copyright (c) 2026 Team ARGOS. License: CC BY-NC-SA 4.0 (full text in [LICENSE](
 This work uses the AOI inspection optimisation dataset and evaluation tools provided by Koh Young Technology for the AI Contest held in conjunction with ICCAS 2026. These materials are provided under the CC BY-NC-SA 4.0 license.
 
 - Official contest repository: https://github.com/iccas2026-kohyoung/contest
-- This repository does not include the contest data, checker, runner or reference solver.
+- The `contest/` folder carries the files of the official contest repository (data, checker, runner, reference solver, documents) and the official evaluation data, unchanged. Source commits and scope are in [contest/SOURCE.md](contest/SOURCE.md). Koh Young Technology holds the copyright of this material.
 
 ## Parts adapted from the checker
 

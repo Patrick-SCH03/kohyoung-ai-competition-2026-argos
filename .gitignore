@@ -1,7 +1,10 @@
 __pycache__/
 *.pyc
 .venv/
-# contest files are not part of this repository
-simulation_data/
-evaluation_data/
-utils/
+*.log
+
+# runner outputs inside contest/
+contest/ARGOS/
+contest/summary_*.csv
+contest/simulation_data/**/output_fov.csv
+contest/simulation_data/*/*/
