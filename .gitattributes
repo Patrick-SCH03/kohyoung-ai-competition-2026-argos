@@ -1,0 +1,2 @@
+# keep the contest material byte-identical to the official repository
+contest/** -text

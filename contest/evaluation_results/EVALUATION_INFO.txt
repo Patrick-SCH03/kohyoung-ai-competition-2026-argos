@@ -1,0 +1,22 @@
+FOV Set Cover MILP Contest - Evaluation Info
+=============================================
+Evaluation Date: 2026-10-12
+Deadline:        2026-10-09
+
+Evaluated Commit:
+  Hash:    d9a301b3a196bd53c678a6f66c86c57af664150c
+  Date:    2026-10-04 19:16:05 +0900
+  Message: feat(argos): ARGOS R8.19 제출 솔버 추가
+
+Dataset: evaluation_data/ (96 datasets, 8 categories x 12)
+Scoring: Total = Sum(CT) + Sum(RT)*a + Sum(k)*b  (a=1, b=10)
+
+Your Results:
+  Sum CT:    7668.8
+  Sum RT:    42.4
+  Sum k*10:  5640
+  Total:     13351.1
+  Avg FOV:   49.9
+  Datasets:  96
+
+Per-dataset details: summary_ARGOS.csv
