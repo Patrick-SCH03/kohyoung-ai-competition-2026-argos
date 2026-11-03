@@ -2,7 +2,7 @@
 
 [English](README.md) | **한국어**
 
-제4회 고영 AI 경진대회 3위 수상작. ICCAS 2026(일본 삿포로) 구두 발표.
+제4회 고영 AI 경진대회 3위(동상) 수상작. ICCAS 2026(일본 삿포로) 구두 발표. [상장](assets/certificate.jpg)
 
 | 팀원 |
 |---|
