@@ -2,7 +2,7 @@
 
 **English** | [한국어](README.ko.md)
 
-3rd place (Bronze) at the 4th Koh Young AI Contest. Oral presentation at ICCAS 2026 (Sapporo, Japan). [Certificate](assets/certificate.jpg)
+3rd place (Bronze) at the 4th Koh Young AI Contest. Oral presentation at ICCAS 2026 (Sapporo, Japan). [Certificate](assets/certificate.jpg) · [News article (Korean)](https://www.irobotnews.com/news/articleView.html?idxno=49323)
 
 | Members |
 |---|
